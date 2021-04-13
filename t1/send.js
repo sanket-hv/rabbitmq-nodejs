@@ -14,7 +14,12 @@ amqp.connect('amqp://localhost', function (error0, connection) {
         }
         // declaring queue
         var queue = 'hello';
-        var msg = 'Hello world';
+        var msg = {
+            success: true,
+            message: "Hello World"
+        };
+
+        msg = JSON.stringify(msg);
 
         // create queue
         channel.assertQueue(queue, {
@@ -24,6 +29,8 @@ amqp.connect('amqp://localhost', function (error0, connection) {
         // sending messages to the queue
         channel.sendToQueue(queue, Buffer.from(msg));
         console.log(" [x] Sent %s", msg);
+
+
     });
     setTimeout(function () {
         connection.close();
